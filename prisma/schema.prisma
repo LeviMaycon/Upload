@@ -12,3 +12,48 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+
+model Upload {
+  id Int @id @default(autoincrement())
+  firstName String
+  lastName String
+  password String
+  enviroment Enviroment @relation(fields: [enviromentId], references: [id])
+  enviromentId Int
+  createdAt DateTime @default(now())
+  houses House[]
+  Stats Stats[]
+}
+
+model House {
+  id Int @id @default(autoincrement())
+  name String
+  description String
+  owner Upload @relation(fields: [ownerId], references: [id])
+  ownerId Int
+}
+
+model Enviroment {
+  id Int @id @default(autoincrement())
+  name String
+  description String
+  uploads Upload[]
+  features Features[]
+}
+
+model Features {
+  id Int @id @default(autoincrement())
+  name String
+  enviroment Enviroment @relation(fields: [enviromentId], references: [id])
+  enviromentId Int
+}
+
+model Stats {
+  id Int @id @default(autoincrement())
+  upload Upload @relation(fields: [uploadId], references: [id])
+  uploadId Int
+  type String
+  value Float
+  createdAt DateTime @default(now())
+}

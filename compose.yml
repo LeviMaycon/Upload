@@ -1,0 +1,14 @@
+services:
+  db:
+    image: bitnami/postgresql
+    ports:
+      - 5431:5432
+    environment:
+      POSTGRESQL_USERNAME: secret
+      POSTGRESQL_PASSWORD: secret
+      POSTGRESQL_DATABASE: upload
+    volumes:
+      - ./.docker/db/data:/var/lib/db/:delegated
+
+volumes:
+  db:
