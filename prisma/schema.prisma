@@ -13,47 +13,62 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Upload {
-  id Int @id @default(autoincrement())
-  firstName String
-  lastName String
-  password String
-  enviroment Enviroment @relation(fields: [enviromentId], references: [id])
-  enviromentId Int
-  createdAt DateTime @default(now())
-  houses House[]
-  Stats Stats[]
+  id          Int          @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  password    String
+  environment Environment? @relation(fields: [environmentId], references: [id])
+  createdAt   DateTime     @default(now())
+  houses      House[]
+  Stats       Stats[]
+
+  World World[]
+
+  grayZone      grayZone[]
+  environmentId Int?
 }
 
 model House {
-  id Int @id @default(autoincrement())
-  name String
+  id          Int    @id @default(autoincrement())
+  name        String
   description String
-  owner Upload @relation(fields: [ownerId], references: [id])
-  ownerId Int
+  owner       Upload @relation(fields: [ownerId], references: [id])
+  ownerId     Int
 }
 
-model Enviroment {
-  id Int @id @default(autoincrement())
-  name String
+model Environment {
+  id          Int        @id @default(autoincrement())
+  name        String
   description String
-  uploads Upload[]
-  features Features[]
+  features    Features[]
+  Upload      Upload[]
 }
 
 model Features {
-  id Int @id @default(autoincrement())
-  name String
-  enviroment Enviroment @relation(fields: [enviromentId], references: [id])
-  enviromentId Int
+  id            Int         @id @default(autoincrement())
+  name          String
+  environment   Environment @relation(fields: [environmentId], references: [id])
+  environmentId Int
 }
 
 model Stats {
-  id Int @id @default(autoincrement())
-  upload Upload @relation(fields: [uploadId], references: [id])
-  uploadId Int
-  type String
-  value Float
+  id        Int      @id @default(autoincrement())
+  uploads   Upload   @relation(fields: [uploadId], references: [id])
+  uploadId  Int
+  type      String
+  value     Float
   createdAt DateTime @default(now())
+}
+
+model World {
+  id       Int    @id @default(autoincrement())
+  uploads  Upload @relation(fields: [uploadId], references: [id])
+  uploadId Int
+}
+
+model grayZone {
+  id       Int    @id @default(autoincrement())
+  uploads  Upload @relation(fields: [uploadId], references: [id])
+  uploadId Int
 }
