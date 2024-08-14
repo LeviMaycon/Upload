@@ -40,6 +40,9 @@ export class UploadService {
         const upload = await this.prisma.upload.findUnique({
             where: {
                 id: id
+            },
+            include: {
+                houses: true
             }
         })
         if (!upload) {
