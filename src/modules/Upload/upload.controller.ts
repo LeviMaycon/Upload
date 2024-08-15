@@ -1,6 +1,7 @@
-import { Body, Controller, Param, Post, Get, Put, Delete } from "@nestjs/common";
+import { Body, Controller, Param, Post, Get, Patch, Delete } from "@nestjs/common";
 import { CreateUploadDto } from "../dtos/create-upload-dto";
 import { UploadService } from "./upload.service";
+import { UpldateUploadDto } from "../dtos/update-upload-dto";
 
 @Controller('uploads')
 export class UploadController {
@@ -24,5 +25,10 @@ export class UploadController {
     @Delete(':id')
     async delete(@Param('id') id: string){
         return await this.uploadService.delete(Number(id));
+    }
+
+    @Patch(':id')
+    async update(@Param('id') id:number, @Body() updateUploadDto:UpldateUploadDto){
+        return await this.uploadService.update(Number(id), updateUploadDto)
     }
 }

@@ -2,7 +2,6 @@ import { ConflictException, Injectable, InternalServerErrorException, NotFoundEx
 import { PrismaService } from "src/prisma/prisma.service";
 import { CreateUploadDto } from "../dtos/create-upload-dto";
 import { UpldateUploadDto } from "../dtos/update-upload-dto";
-import { error } from "console";
 
 
 @Injectable()
