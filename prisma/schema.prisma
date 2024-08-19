@@ -22,7 +22,8 @@ model Upload {
   houses      House[]
   Stats       Stats[]
 
-  World World[]
+  world  World? @relation(fields: [worldId], references: [id])
+  worldId Int?
 
   grayZone      grayZone[]
   environmentId Int?
@@ -55,8 +56,9 @@ model Stats {
 
 model World {
   id       Int    @id @default(autoincrement())
-  uploads  Upload @relation(fields: [uploadId], references: [id])
-  uploadId Int
+  name String
+
+  Upload Upload[]
 }
 
 model grayZone {
