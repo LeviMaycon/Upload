@@ -2,7 +2,6 @@ import { ConflictException, Injectable, InternalServerErrorException, NotFoundEx
 import { PrismaService } from "src/prisma/prisma.service";
 import { CreateUploadDto } from "../dtos/create-upload-dto";
 import { UpldateUploadDto } from "../dtos/update-upload-dto";
-import { error } from "console";
 
 
 @Injectable()
@@ -30,8 +29,12 @@ export class UploadService {
             data: {
                 firstName: data.firstName,
                 lastName: data.lastName,
-                password: data.password
+                password: data.password,
+                worldId: data.worldId
             },
+            include: {
+                world: true
+            }
         });
     }
 
@@ -40,6 +43,9 @@ export class UploadService {
         const upload = await this.prisma.upload.findUnique({
             where: {
                 id: id
+            },
+            include: {
+                houses: true
             }
         })
         if (!upload) {

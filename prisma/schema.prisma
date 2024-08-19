@@ -18,12 +18,12 @@ model Upload {
   firstName   String
   lastName    String
   password    String
-  environment Environment? @relation(fields: [environmentId], references: [id])
   createdAt   DateTime     @default(now())
   houses      House[]
   Stats       Stats[]
 
-  World World[]
+  world  World? @relation(fields: [worldId], references: [id])
+  worldId Int?
 
   grayZone      grayZone[]
   environmentId Int?
@@ -34,21 +34,14 @@ model House {
   name        String
   description String
   owner       Upload @relation(fields: [ownerId], references: [id])
+  features Features[]
   ownerId     Int
-}
-
-model Environment {
-  id          Int        @id @default(autoincrement())
-  name        String
-  description String
-  features    Features[]
-  Upload      Upload[]
 }
 
 model Features {
   id            Int         @id @default(autoincrement())
   name          String
-  environment   Environment @relation(fields: [environmentId], references: [id])
+  house House[]
   environmentId Int
 }
 
@@ -63,8 +56,9 @@ model Stats {
 
 model World {
   id       Int    @id @default(autoincrement())
-  uploads  Upload @relation(fields: [uploadId], references: [id])
-  uploadId Int
+  name String
+
+  Upload Upload[]
 }
 
 model grayZone {

@@ -9,4 +9,4 @@ import { PrismaModule } from "src/prisma/prisma.module";
     providers: [UploadService]
 })
 
-export class uploadModule { }
+export class uploadModule {}
