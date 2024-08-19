@@ -29,8 +29,12 @@ export class UploadService {
             data: {
                 firstName: data.firstName,
                 lastName: data.lastName,
-                password: data.password
+                password: data.password,
+                worldId: data.worldId
             },
+            include: {
+                world: true
+            }
         });
     }
 

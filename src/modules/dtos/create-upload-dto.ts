@@ -12,4 +12,6 @@ export class CreateUploadDto {
 
     @IsNotEmpty()
     password: string
+
+    worldId: number
 }
