@@ -14,34 +14,44 @@ datasource db {
 }
 
 model Upload {
-  id          Int          @id @default(autoincrement())
-  firstName   String
-  lastName    String
-  password    String
-  createdAt   DateTime     @default(now())
-  houses      House[]
-  Stats       Stats[]
+  id        Int      @id @default(autoincrement())
+  firstName String
+  lastName  String
+  password  String
+  createdAt DateTime @default(now())
+  houses    House[]
+  Stats     Stats[]
 
-  world  World? @relation(fields: [worldId], references: [id])
+  world   World? @relation(fields: [worldId], references: [id])
   worldId Int?
 
   grayZone      grayZone[]
   environmentId Int?
 }
 
+model Assistant {
+  id       Int    @id @default(autoincrement())
+  name     String
+  function String
+  world    World? @relation(fields: [worldId], references: [id])
+  worldId  Int?
+}
+
 model House {
-  id          Int    @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   name        String
   description String
-  owner       Upload @relation(fields: [ownerId], references: [id])
-  features Features[]
+  owner       Upload     @relation(fields: [ownerId], references: [id])
+  features    Features[]
   ownerId     Int
 }
 
 model Features {
-  id            Int         @id @default(autoincrement())
+  id            Int     @id @default(autoincrement())
   name          String
-  house House[]
+  color         String
+  size          String
+  house         House[]
   environmentId Int
 }
 
@@ -55,10 +65,12 @@ model Stats {
 }
 
 model World {
-  id       Int    @id @default(autoincrement())
+  id   Int    @id @default(autoincrement())
   name String
 
   Upload Upload[]
+
+  Assistant Assistant[]
 }
 
 model grayZone {
